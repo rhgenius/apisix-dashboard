@@ -140,8 +140,8 @@ Wants=network-online.target
 Type=forking
 Restart=on-failure
 WorkingDirectory=/opt/apisix-dashboard
-ExecStart=/opt/apisix-dashboard/manager-api -c /opt/apisix-dashboard/output/conf/conf.yaml
-ExecStop=/opt/apisix-dashboard/manager-api -c /opt/apisix-dashboard/output/conf/conf.yaml stop
+ExecStart=/opt/apisix-dashboard/output/manager-api -c /opt/apisix-dashboard/output/conf/conf.yaml
+ExecStop=/opt/apisix-dashboard/output/manager-api -c /opt/apisix-dashboard/output/conf/conf.yaml stop
 
 [Install]
 WantedBy=multi-user.target
