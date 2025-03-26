@@ -43,6 +43,7 @@ manager-api
 grpc-server-example/
 api/test/docker/*tar.gz*
 
+executable.tar.gz
 output
 apisix_logs
 default.etcd
