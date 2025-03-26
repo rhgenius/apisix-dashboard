@@ -43,8 +43,7 @@ manager-api
 grpc-server-example/
 api/test/docker/*tar.gz*
 
-# comment out output to upload all files to repository
-# output
+output
 apisix_logs
 default.etcd
 api/build-tools/apisix
