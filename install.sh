@@ -109,23 +109,10 @@ sudo systemctl status apisix.service --no-pager
 
 # Install APISIX Dashboard
 rm -rf /opt/apisix-dashboard
-wget https://github.com/rhgenius/apisix-dashboard/archive/refs/tags/v3.0.1.tar.gz
-tar -xvf v3.0.1.tar.gz
-mv apisix-dashboard-3.0.1/ /opt/apisix-dashboard
-cd /opt/apisix-dashboard/
-sudo apt install make
-curl -fsSL https://deb.nodesource.com/setup_16.x | sudo -E bash -
-sudo apt-get install -y nodejs
-sudo npm install -g yarn
-yarn config set strict-ssl false
-yarn install
-yarn --version
-wget https://go.dev/dl/go1.21.0.linux-amd64.tar.gz
-sudo tar -C /usr/local -xzf go1.21.0.linux-amd64.tar.gz
-export PATH=$PATH:/usr/local/go/bin
-source ~/.profile
-go version
-make build
+wget https://github.com/rhgenius/apisix-dashboard/releases/download/v3.0.1/executable.tar.gz
+tar -xvf executable.tar.gz
+mkdir -p /opt/apisix-dashboard
+cp -rf output/* /opt/apisix-dashboard/
 
 # create APISIX Dashboard systemd service
 echo "Creating APISIX Dashboard systemd service"
@@ -134,17 +121,10 @@ sudo tee /etc/systemd/system/apisix-dashboard.service > /dev/null <<EOF
 Description=apisix-dashboard
 Conflicts=apisix-dashboard.service
 After=network-online.target
-Wants=network-online.target
 
 [Service]
-Type=forking
-Restart=on-failure
 WorkingDirectory=/opt/apisix-dashboard
-ExecStart=/opt/apisix-dashboard/output/manager-api -c /opt/apisix-dashboard/output/conf/conf.yaml
-ExecStop=/opt/apisix-dashboard/output/manager-api -c /opt/apisix-dashboard/output/conf/conf.yaml stop
-
-[Install]
-WantedBy=multi-user.target
+ExecStart=/opt/apisix-dashboard/manager-api -c /opt/apisix-dashboard/conf/conf.yaml
 EOF
 
 # Start and enable APISIX Dashboard service
@@ -154,5 +134,6 @@ sudo systemctl enable apisix-dashboard.service
 sudo systemctl start apisix-dashboard.service
 echo "APISIX Dashboard service status:"
 sudo systemctl status apisix-dashboard.service --no-pager
+sudo ss -plunt
 
 echo "Installation completed successfully!"

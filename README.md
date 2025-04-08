@@ -107,3 +107,66 @@ Please refer to the [FAQ](./docs/en/latest/FAQ.md) for more known issues.
 ## License
 
 [Apache License 2.0](./LICENSE)
+
+1. etcd (Distributed Key-Value Store)
+Lines:
+
+Copy
+tcp    LISTEN  0   4096  127.0.0.1:2379  0.0.0.0:*  users:(("etcd",pid=1542,fd=8))
+tcp    LISTEN  0   4096  127.0.0.1:2380  0.0.0.0:*  users:(("etcd",pid=1542,fd=7))
+Explanation:
+
+Port 2379: etcd client communication port. APISIX uses this to read/write configuration data.
+
+Port 2380: etcd peer communication port (for cluster node-to-node communication).
+
+Both are bound to 127.0.0.1, meaning etcd is only accessible locally (not exposed externally).
+
+2. APISIX (API Gateway)
+Lines:
+
+Copy
+tcp  LISTEN  0  511  0.0.0.0:9443  0.0.0.0:*  users:(("openresty",pid=9898,fd=15), ...)
+tcp  LISTEN  0  511  0.0.0.0:8000  0.0.0.0:*  users:(("openresty",pid=9898,fd=13), ...)
+tcp  LISTEN  0  511  0.0.0.0:9180  0.0.0.0:*  users:(("openresty",pid=9898,fd=8), ...)
+tcp  LISTEN  0  511  127.0.0.1:9090  0.0.0.0:*  users:(("openresty",pid=9898,fd=7), ...)
+tcp  LISTEN  0  511  127.0.0.1:9091  0.0.0.0:*  users:(("openresty",pid=9901,fd=26))
+Key Ports:
+
+Port 9443: HTTPS traffic endpoint (default SSL port for APISIX).
+
+Port 8000: HTTP traffic endpoint (default non-SSL port for APISIX).
+
+Port 9180: Prometheus metrics endpoint (exposes APISIX metrics for monitoring).
+
+Port 9090/9091: Admin API ports (used for configuring APISIX; 9090 is HTTP, 9091 is HTTPS).
+
+Bound to 0.0.0.0, meaning APISIX accepts external traffic on these ports.
+
+3. APISIX Dashboard (Management UI)
+Line:
+
+Copy
+tcp  LISTEN  0  4096  *:9000  *:*  users:(("manager-api",pid=9729,fd=10))
+Explanation:
+
+Port 9000: APISIX Dashboard (manager-api) listens here for HTTP traffic.
+
+Bound to all interfaces (*:9000), so the dashboard is accessible externally.
+
+Summary
+Component	Port	Purpose	Accessibility
+etcd	2379	Client communication (config store)	Localhost only
+2380	Peer communication (cluster)	Localhost only
+APISIX	8000	HTTP API Gateway	External
+9443	HTTPS API Gateway	External
+9180	Prometheus metrics	External
+9090	Admin API (HTTP)	Localhost only
+9091	Admin API (HTTPS)	Localhost only
+APISIX Dashboard	9000	Management UI/API	External
+Notes
+Security: Admin ports (9090, 9091) and etcd ports (2379, 2380) are localhost-only, which is a security best practice.
+
+OpenResty: APISIX runs on OpenResty (a Lua-based NGINX extension), hence the openresty process name.
+
+systemd-resolve/chronyd: These are unrelated to APISIX/etcd (system DNS/time services).
