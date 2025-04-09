@@ -1,0 +1,13 @@
+ssl:
+  enable: true
+  protocols:
+    - TLSv1.2
+    - TLSv1.3
+  ciphers: 'ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-ECDSA-CHACHA20-POLY1305:ECDHE-RSA-CHACHA20-POLY1305'
+  prefer_server_ciphers: on
+  session_timeout: 1d
+  session_cache: shared:SSL:10m
+  stapling: on
+  stapling_verify: on
+  verify_depth: 2
+  reject_handshake: on
