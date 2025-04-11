@@ -1,0 +1,19 @@
+plugins:
+  limit-req:
+    enable: true
+    rate: 10
+    burst: 5
+    key: remote_addr
+    rejected_code: 429
+    message: 'Too many requests'
+    connection:
+      max_conns: 20
+      max_conns_per_key: 10
+      delay: 0.1
+
+  ip-restriction:
+    enable: false
+
+  ssl:
+    strict_sni: true
+    reject_unauthorized: false
