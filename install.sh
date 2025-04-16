@@ -66,7 +66,8 @@ deployment:
         role: admin
   etcd:
     host:
-${ETCD_HOSTS_YAML}EOF
+${ETCD_HOSTS_YAML}
+EOF
 
 # Start and enable APISIX service
 echo "Starting APISIX service"
