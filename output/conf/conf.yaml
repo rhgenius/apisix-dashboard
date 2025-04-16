@@ -31,7 +31,7 @@ conf:
   #   cert: "/tmp/cert/example.crt" # Path of your SSL cert.
   #   key:  "/tmp/cert/example.key"  # Path of your SSL key.
   ssl:
-    host: h-sandbox-apisix-dashboard.cbi.id     # the address on which the `Manager API` should listen for HTTPS.
+    host: 0.0.0.0     # the address on which the `Manager API` should listen for HTTPS.
                           # The default value is 0.0.0.0, if want to specify, please enable it.
     port: 9001            # The port on which the `Manager API` should listen for HTTPS.
     cert: "/usr/local/apisix/conf/cert/fullchain.pem" # Path of your SSL cert.
@@ -46,7 +46,10 @@ conf:
                           # It also support CIDR like 192.168.1.0/24 and 2001:0db8::/32
   etcd:
     endpoints:            # supports defining multiple etcd host addresses for an etcd cluster
-      - 127.0.0.1:2379
+      - 10.67.1.122:2379
+      - 10.67.2.181:2379
+      - 10.67.1.157:2379
+      - 10.67.2.102:2379
                           # yamllint disable rule:comments-indentation
                           # etcd basic auth info
     # username: "root"    # ignore etcd username if not enable etcd auth
