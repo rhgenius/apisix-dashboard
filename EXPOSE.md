@@ -150,19 +150,34 @@ curl http://localhost:9180/apisix/admin/ssls/1 -H 'X-API-KEY: edd1c9f034335f136f
 cert_content=$(cat /usr/local/apisix/conf/cert/cert.creditbureauindonesia.co.id.pem | awk 'NF {sub(/\r/, ""); printf "%s\\n",$0;}')
 key_content=$(cat /usr/local/apisix/conf/cert/key.creditbureauindonesia.co.id.pem | awk 'NF {sub(/\r/, ""); printf "%s\\n",$0;}')
 
-cd ../fastapi-app1/
-
-# Apply SSL configuration (hello-world1)
 curl http://localhost:9180/apisix/admin/ssls/8881 \
 -H 'X-API-KEY: edd1c9f034335f136f87ad84b625c8f1' \
 -X PUT -d @- <<EOF
 {
   "cert": "$cert_content",
   "key": "$key_content", 
-  "snis": ["hello-world1.creditbureauindonesia.co.id"],
-  "type": "server"
+  "snis": ["*.creditbureauindonesia.co.id","creditbureauindonesia.co.id"]
 }
 EOF
+
+#==========================================================================
+# h-sandbox.cbi.id
+cert_content=$(cat /usr/local/apisix/conf/cert/fullchain.pem | awk 'NF {sub(/\r/, ""); printf "%s\\n",$0;}')
+key_content=$(cat /usr/local/apisix/conf/cert/key.cbi.id.pem | awk 'NF {sub(/\r/, ""); printf "%s\\n",$0;}')
+
+
+# Apply SSL configuration globally
+curl http://localhost:9180/apisix/admin/ssls/8881 \
+-H 'X-API-KEY: edd1c9f034335f136f87ad84b625c8f1' \
+-X PUT -d @- <<EOF
+{
+  "cert": "$cert_content",
+  "key": "$key_content", 
+  "snis": ["*.cbi.id","cbi.id"]
+}
+EOF
+
+cd ../fastapi-app1/
 
 # Apply upstream configuration (hello-world1)
 curl http://localhost:9180/apisix/admin/upstreams/8881 \
@@ -176,18 +191,6 @@ curl http://localhost:9180/apisix/admin/routes/8881 \
 
 cd ../fastapi-app2/
 
-# Apply SSL configuration (hello-world2)
-curl http://localhost:9180/apisix/admin/ssls/8882 \
--H 'X-API-KEY: edd1c9f034335f136f87ad84b625c8f1' \
--X PUT -d @- <<EOF
-{
-  "cert": "$cert_content",
-  "key": "$key_content", 
-  "snis": ["hello-world2.creditbureauindonesia.co.id"],
-  "type": "server"
-}
-EOF
-
 # Apply upstream configuration (hello-world2)
 curl http://localhost:9180/apisix/admin/upstreams/8882 \
 -H 'X-API-KEY: edd1c9f034335f136f87ad84b625c8f1' \
@@ -199,18 +202,6 @@ curl http://localhost:9180/apisix/admin/routes/8882 \
 -X PUT -d @apisix-route.json
 
 cd ../fastapi-app3/
-
-# Apply SSL configuration (hello-world3)
-curl http://localhost:9180/apisix/admin/ssls/8883 \
--H 'X-API-KEY: edd1c9f034335f136f87ad84b625c8f1' \
--X PUT -d @- <<EOF
-{
-  "cert": "$cert_content",
-  "key": "$key_content", 
-  "snis": ["hello-world3.creditbureauindonesia.co.id"],
-  "type": "server"
-}
-EOF
 
 # Apply upstream configuration (hello-world3)
 curl http://localhost:9180/apisix/admin/upstreams/8883 \

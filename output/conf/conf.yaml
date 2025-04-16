@@ -128,9 +128,9 @@ plugins:
   # - kafka-proxy
   - key-auth
   # - ldap-auth
-  # - limit-conn
-  # - limit-count
-  # - limit-req
+  - limit-conn
+  - limit-count
+  - limit-req
   # - loggly
   # - log-rotate
   # - mocking
