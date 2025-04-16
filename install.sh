@@ -94,6 +94,9 @@ After=network-online.target
 [Service]
 WorkingDirectory=/opt/apisix-dashboard
 ExecStart=/opt/apisix-dashboard/manager-api -c /opt/apisix-dashboard/conf/conf.yaml
+
+[Install]
+WantedBy=multi-user.target
 EOF
 
 # Start and enable APISIX Dashboard service
