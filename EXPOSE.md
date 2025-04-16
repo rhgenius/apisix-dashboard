@@ -224,7 +224,7 @@ curl http://localhost:9180/apisix/admin/ssls -H 'X-API-KEY: edd1c9f034335f136f87
 Step 2: Test the SSL Handshake Manually
 
 ```bash
-openssl s_client -connect apisix-dashboard.rachmat.my.id:443 -servername apisix-dashboard.rachmat.my.id
+openssl s_client -connect h-sandbox-hello-world-01.cbi.id:443 -servername h-sandbox-hello-world-01.cbi.id
 ```
 
 Step 3: Restart APISIX
