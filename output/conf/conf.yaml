@@ -31,7 +31,7 @@ conf:
   #   cert: "/tmp/cert/example.crt" # Path of your SSL cert.
   #   key:  "/tmp/cert/example.key"  # Path of your SSL key.
   ssl:
-    host: 0.0.0.0     # the address on which the `Manager API` should listen for HTTPS.
+    host: h-sandbox-apisix-dashboard.cbi.id     # the address on which the `Manager API` should listen for HTTPS.
                           # The default value is 0.0.0.0, if want to specify, please enable it.
     port: 9001            # The port on which the `Manager API` should listen for HTTPS.
     cert: "/usr/local/apisix/conf/cert/fullchain.pem" # Path of your SSL cert.

@@ -38,7 +38,10 @@ conf:
                           # It also support CIDR like 192.168.1.0/24 and 2001:0db8::/32
   etcd:
     endpoints:            # supports defining multiple etcd host addresses for an etcd cluster
-      - 127.0.0.1:2379
+      - 10.67.1.122:2379
+      - 10.67.2.181:2379
+      - 10.67.1.157:2379
+      - 10.67.2.102:2379
                           # yamllint disable rule:comments-indentation
                           # etcd basic auth info
     # username: "root"    # ignore etcd username if not enable etcd auth
@@ -94,83 +97,83 @@ oidc:
   scope: openid
 
 plugins:
-  - api-breaker
-  - authz-casbin
-  - authz-casdoor
-  - authz-keycloak
-  - aws-lambda
-  - azure-functions
+  # - api-breaker
+  # - authz-casbin
+  # - authz-casdoor
+  # - authz-keycloak
+  # - aws-lambda
+  # - azure-functions
   - basic-auth
   # - batch-requests
-  - clickhouse-logger
-  - client-control
-  - consumer-restriction
+  # - clickhouse-logger
+  # - client-control
+  # - consumer-restriction
   - cors
-  - csrf
-  - datadog
+  # - csrf
+  # - datadog
   # - dubbo-proxy
-  - echo
-  - error-log-logger
+  # - echo
+  # - error-log-logger
   # - example-plugin
-  - ext-plugin-post-req
-  - ext-plugin-post-resp
-  - ext-plugin-pre-req
-  - fault-injection
-  - file-logger
-  - forward-auth
-  - google-cloud-logging
-  - grpc-transcode
-  - grpc-web
-  - gzip
-  - hmac-auth
-  - http-logger
-  - ip-restriction
+  # - ext-plugin-post-req
+  # - ext-plugin-post-resp
+  # - ext-plugin-pre-req
+  # - fault-injection
+  # - file-logger
+  # - forward-auth
+  # - google-cloud-logging
+  # - grpc-transcode
+  # - grpc-web
+  # - gzip
+  # - hmac-auth
+  # - http-logger
+  # - ip-restriction
   - jwt-auth
-  - kafka-logger
-  - kafka-proxy
+  # - kafka-logger
+  # - kafka-proxy
   - key-auth
-  - ldap-auth
+  # - ldap-auth
   - limit-conn
   - limit-count
   - limit-req
-  - loggly
+  # - loggly
   # - log-rotate
-  - mocking
+  # - mocking
   # - node-status
-  - opa
-  - openid-connect
-  - opentelemetry
-  - openwhisk
-  - prometheus
-  - proxy-cache
-  - proxy-control
-  - proxy-mirror
-  - proxy-rewrite
-  - public-api
-  - real-ip
-  - redirect
-  - referer-restriction
-  - request-id
-  - request-validation
-  - response-rewrite
-  - rocketmq-logger
-  - server-info
-  - serverless-post-function
-  - serverless-pre-function
-  - skywalking
-  - skywalking-logger
-  - sls-logger
-  - splunk-hec-logging
-  - syslog
-  - tcp-logger
-  - traffic-split
-  - ua-restriction
-  - udp-logger
-  - uri-blocker
-  - wolf-rbac
-  - zipkin
-  - elasticsearch-logge
-  - openfunction
-  - tencent-cloud-cls
-  - ai
-  - cas-auth
+  # - opa
+  # - openid-connect
+  # - opentelemetry
+  # - openwhisk
+  # - prometheus
+  # - proxy-cache
+  # - proxy-control
+  # - proxy-mirror
+  # - proxy-rewrite
+  # - public-api
+  # - real-ip
+  # - redirect
+  # - referer-restriction
+  # - request-id
+  # - request-validation
+  # - response-rewrite
+  # - rocketmq-logger
+  # - server-info
+  # - serverless-post-function
+  # - serverless-pre-function
+  # - skywalking
+  # - skywalking-logger
+  # - sls-logger
+  # - splunk-hec-logging
+  # - syslog
+  # - tcp-logger
+  # - traffic-split
+  # - ua-restriction
+  # - udp-logger
+  # - uri-blocker
+  # - wolf-rbac
+  # - zipkin
+  # - elasticsearch-logge
+  # - openfunction
+  # - tencent-cloud-cls
+  # - ai
+  # - cas-auth
