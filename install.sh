@@ -1,6 +1,13 @@
 #!/bin/bash
 set -e
 
+# Download APISIX Dashboard
+rm -rf /opt/apisix-dashboard
+wget https://github.com/rhgenius/apisix-dashboard/releases/download/v3.0.1/executable.tar.gz
+tar -xvf executable.tar.gz
+mkdir -p /opt/apisix-dashboard
+cp -rf output/* /opt/apisix-dashboard/
+
 # Install APISIX
 echo "Installing APISIX dependencies"
 sudo apt-get update
@@ -13,6 +20,10 @@ echo "deb http://repos.apiseven.com/packages/debian bullseye main" | sudo tee /e
 echo "Installing APISIX"
 sudo apt-get update
 sudo apt-get install -y apisix=3.12.0-0
+
+# Copy configuration and certificate file
+cp -rf /opt/apisix-dashboard/cert /usr/local/apisix/conf/
+cp -f /opt/apisix-dashboard/conf/config.yaml /usr/local/apisix/conf/
 
 # Create APISIX systemd service
 echo "Creating APISIX systemd service"
@@ -71,14 +82,6 @@ sudo systemctl enable apisix.service
 sudo systemctl start apisix.service
 echo "APISIX service status:"
 sudo systemctl status apisix.service --no-pager
-
-# Install APISIX Dashboard
-rm -rf /opt/apisix-dashboard
-wget https://github.com/rhgenius/apisix-dashboard/releases/download/v3.0.1/executable.tar.gz
-tar -xvf executable.tar.gz
-mkdir -p /opt/apisix-dashboard
-cp -rf output/* /opt/apisix-dashboard/
-cp -rf /opt/apisix-dashboard/cert /usr/local/apisix/conf/
 
 # create APISIX Dashboard systemd service
 echo "Creating APISIX Dashboard systemd service"
