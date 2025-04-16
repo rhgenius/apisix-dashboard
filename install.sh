@@ -79,6 +79,10 @@ tar -xvf executable.tar.gz
 mkdir -p /opt/apisix-dashboard
 cp -rf output/* /opt/apisix-dashboard/
 
+# Download APISIX Dashboard config from GitHub
+mkdir -p /opt/apisix-dashboard/conf
+wget -O /opt/apisix-dashboard/conf/conf.yaml https://raw.githubusercontent.com/rhgenius/apisix-dashboard/main/api/conf/conf.yaml
+
 # create APISIX Dashboard systemd service
 echo "Creating APISIX Dashboard systemd service"
 sudo tee /etc/systemd/system/apisix-dashboard.service > /dev/null <<EOF
