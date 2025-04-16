@@ -1,50 +1,6 @@
 #!/bin/bash
 set -e
 
-# Install etcd
-ETCD_VER=v3.5.0
-echo "Downloading etcd ${ETCD_VER}"
-wget "https://github.com/etcd-io/etcd/releases/download/${ETCD_VER}/etcd-${ETCD_VER}-linux-amd64.tar.gz"
-tar -xvf "etcd-${ETCD_VER}-linux-amd64.tar.gz"
-sudo mkdir -p /opt/etcd
-sudo mv etcd-${ETCD_VER}-linux-amd64/etcd* /opt/etcd/
-sudo mkdir -p /var/log/etcd
-
-# Create etcd systemd service
-echo "Creating etcd systemd service"
-sudo tee /etc/systemd/system/etcd.service > /dev/null <<EOF
-[Unit]
-Description=etcd service
-After=network.target
-
-[Service]
-Type=simple
-ExecStart=/opt/etcd/etcd --config-file /opt/etcd/etcd.conf
-Restart=always
-RestartSec=5
-LimitNOFILE=65536
-StandardOutput=append:/var/log/etcd/etcd.log
-StandardError=append:/var/log/etcd/etcd_error.log
-
-[Install]
-WantedBy=multi-user.target
-EOF
-
-# Create etcd configuration
-echo "Creating etcd configuration"
-sudo tee /opt/etcd/etcd.conf > /dev/null <<EOF
-listen-client-urls: http://localhost:2379
-listen-peer-urls: http://localhost:2380
-EOF
-
-# Start and enable etcd service
-echo "Starting etcd service"
-sudo systemctl daemon-reload
-sudo systemctl enable etcd.service
-sudo systemctl start etcd.service
-echo "etcd service status:"
-sudo systemctl status etcd.service --no-pager
-
 # Install APISIX
 echo "Installing APISIX dependencies"
 sudo apt-get update
@@ -80,8 +36,20 @@ LimitNOFILE=65536
 WantedBy=multi-user.target
 EOF
 
-# Configure APISIX
-echo "Configuring APISIX"
+# Configure APISIX with etcd cluster
+# Replace these IPs with your actual etcd cluster endpoints if needed
+ETCD_ENDPOINTS=(
+  "http://10.67.1.122:2379"
+  "http://10.67.2.181:2379"
+  "http://10.67.1.157:2379"
+  "http://10.67.2.102:2379"
+)
+
+ETCD_HOSTS_YAML=""
+for ep in "${ETCD_ENDPOINTS[@]}"; do
+  ETCD_HOSTS_YAML+="      - \"$ep\"\n"
+done
+
 sudo tee /usr/local/apisix/conf/config.yaml > /dev/null <<EOF
 apisix:
   node_listen:
@@ -98,8 +66,7 @@ deployment:
         role: admin
   etcd:
     host:
-      - "http://localhost:2379"
-EOF
+${ETCD_HOSTS_YAML}EOF
 
 # Start and enable APISIX service
 echo "Starting APISIX service"
