@@ -45,11 +45,6 @@ ETCD_ENDPOINTS=(
   "http://10.67.2.102:2379"
 )
 
-ETCD_HOSTS_YAML=""
-for ep in "${ETCD_ENDPOINTS[@]}"; do
-  ETCD_HOSTS_YAML+="      - \"$ep\"\n"
-done
-
 sudo tee /usr/local/apisix/conf/config.yaml > /dev/null <<EOF
 apisix:
   node_listen:
@@ -66,7 +61,7 @@ deployment:
         role: admin
   etcd:
     host:
-${ETCD_HOSTS_YAML}
+$(for ep in "${ETCD_ENDPOINTS[@]}"; do echo "      - \"$ep\""; done)
 EOF
 
 # Start and enable APISIX service

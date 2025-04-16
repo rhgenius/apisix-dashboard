@@ -18,6 +18,7 @@
 # yamllint disable rule:comments-indentation
 conf:
   listen:
+    host: 0.0.0.0
     # host: 127.0.0.1     # the address on which the `Manager API` should listen.
                           # The default value is 0.0.0.0, if want to specify, please enable it.
                           # This value accepts IPv4, IPv6, and hostname.
@@ -29,10 +30,19 @@ conf:
   #   port: 9001            # The port on which the `Manager API` should listen for HTTPS.
   #   cert: "/tmp/cert/example.crt" # Path of your SSL cert.
   #   key:  "/tmp/cert/example.key"  # Path of your SSL key.
+  ssl:
+    host: 0.0.0.0     # the address on which the `Manager API` should listen for HTTPS.
+                          # The default value is 0.0.0.0, if want to specify, please enable it.
+    port: 9001            # The port on which the `Manager API` should listen for HTTPS.
+    cert: "/usr/local/apisix/conf/cert/fullchain.pem" # Path of your SSL cert.
+    key:  "/usr/local/apisix/conf/cert/key.cbi.id.pem"  # Path of your SSL key.
 
-  allow_list:             # If we don't set any IP list, then any IP access is allowed by default.
-    - 0.0.0.0/0           # The rules are checked in sequence until the first match is found.
-    - ::/0                 # In this example, access is allowed only for IPv4 network 127.0.0.1, and for IPv6 network ::1.
+  allow_list:
+    - 0.0.0.0/0
+    - ::/0
+  # allow_list:             # If we don't set any IP list, then any IP access is allowed by default.
+  #   - 0.0.0.0/0           # The rules are checked in sequence until the first match is found.
+  #   - ::/0                 # In this example, access is allowed only for IPv4 network 127.0.0.1, and for IPv6 network ::1.
                           # It also support CIDR like 192.168.1.0/24 and 2001:0db8::/32
   etcd:
     endpoints:            # supports defining multiple etcd host addresses for an etcd cluster
