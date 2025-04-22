@@ -127,7 +127,7 @@ plugins:
   # - ext-plugin-post-resp
   # - ext-plugin-pre-req
   # - fault-injection
-  # - file-logger
+  - file-logger
   # - forward-auth
   # - google-cloud-logging
   # - grpc-transcode
@@ -180,7 +180,7 @@ plugins:
   # - uri-blocker
   # - wolf-rbac
   # - zipkin
-  # - elasticsearch-logge
+  - elasticsearch-logger
   # - openfunction
   # - tencent-cloud-cls
   # - ai

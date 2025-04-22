@@ -22,8 +22,7 @@ sudo apt-get update
 sudo apt-get install -y apisix=3.12.0-0
 
 # Copy configuration and certificate file
-cp -rf /opt/apisix-dashboard/cert /usr/local/apisix/conf/
-cp -f /opt/apisix-dashboard/conf/config.yaml /usr/local/apisix/conf/
+cp -rf /opt/apisix-dashboard/conf/cert /usr/local/apisix/conf/
 
 # Create APISIX systemd service
 echo "Creating APISIX systemd service"
@@ -60,7 +59,17 @@ sudo tee /usr/local/apisix/conf/config.yaml > /dev/null <<EOF
 apisix:
   node_listen:
     - port: 80
-    - port: 443
+  enable_http2: true
+  ssl:
+    enable: true
+    listen:
+      - port: 443
+        server_name: h-sandbox-apisix-api.cbi.id
+    cert: /usr/local/apisix/conf/cert/fullchain.pem
+    key: /usr/local/apisix/conf/cert/key.cbi.id.pem
+    ssl_protocols: TLSv1.2 TLSv1.3
+    ssl_ciphers: ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-ECDSA-CHACHA20-POLY1305:ECDHE-RSA-CHACHA20-POLY1305:DHE-RSA-AES128-GCM-SHA256:DHE-RSA-AES256-GCM-SHA384
+    ssl_session_tickets: false
 deployment:
   role: traditional
   role_traditional:
