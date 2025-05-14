@@ -24,6 +24,11 @@ sudo apt-get install docker-compose-plugin -y
 sudo chmod +x /usr/libexec/docker/cli-plugins/docker-compose
 sudo ln -s /usr/libexec/docker/cli-plugins/docker-compose /usr/bin/docker-compose
 
+# Make Docker and Docker Compose accessible without sudo
+sudo chmod 666 /var/run/docker.sock
+sudo usermod -aG docker $USER
+newgrp docker
+
 # Verify installations
 docker-compose version
 docker version
