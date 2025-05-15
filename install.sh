@@ -49,10 +49,10 @@ EOF
 # Configure APISIX with etcd cluster
 # Replace these IPs with your actual etcd cluster endpoints if needed
 ETCD_ENDPOINTS=(
-  "http://10.67.1.122:2379"
-  "http://10.67.2.181:2379"
-  "http://10.67.1.157:2379"
-  "http://10.67.2.102:2379"
+  "http://10.101.207.13:2379"
+  "http://10.101.207.14:2379"
+  "http://10.101.207.15:2379"
+
 )
 
 sudo tee /usr/local/apisix/conf/config.yaml > /dev/null <<EOF
@@ -64,9 +64,9 @@ apisix:
     enable: true
     listen:
       - port: 443
-        server_name: h-sandbox-apisix-api.cbi.id
-    cert: /usr/local/apisix/conf/cert/fullchain.pem
-    key: /usr/local/apisix/conf/cert/key.cbi.id.pem
+        server_name: apisix.creditbureauindonesia.co.id
+    cert: /usr/local/apisix/conf/cert/cert.creditbureauindonesia.co.id.pem
+    key: /usr/local/apisix/conf/cert/key.creditbureauindonesia.co.id.pem
     ssl_protocols: TLSv1.2 TLSv1.3
     ssl_ciphers: ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-ECDSA-CHACHA20-POLY1305:ECDHE-RSA-CHACHA20-POLY1305:DHE-RSA-AES128-GCM-SHA256:DHE-RSA-AES256-GCM-SHA384
     ssl_session_tickets: false
@@ -77,7 +77,7 @@ deployment:
   admin:
     admin_key:
       - name: admin
-        key: edd1c9f034335f136f87ad84b625c8f1
+        key: I8uPoqWntUxR64K
         role: admin
   etcd:
     host:

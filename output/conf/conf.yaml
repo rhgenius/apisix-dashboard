@@ -34,8 +34,8 @@ conf:
       # the address on which the `Manager API` should listen for HTTPS.
       # The default value is 0.0.0.0, if want to specify, please enable it.
     port: 9001 # The port on which the `Manager API` should listen for HTTPS.
-    cert: "/usr/local/apisix/conf/cert/fullchain.pem" # Path of your SSL cert.
-    key: "/usr/local/apisix/conf/cert/key.cbi.id.pem" # Path of your SSL key.
+    cert: "/usr/local/apisix/conf/cert/cert.creditbureauindonesia.co.id.pem" # Path of your SSL cert.
+    key: "/usr/local/apisix/conf/cert/key.creditbureauindonesia.co.id.pem" # Path of your SSL key.
 
   allow_list:
   - 0.0.0.0/0
@@ -47,10 +47,9 @@ conf:
   etcd:
     endpoints:
     # supports defining multiple etcd host addresses for an etcd cluster
-    - 10.67.1.122:2379
-    - 10.67.2.181:2379
-    - 10.67.1.157:2379
-    - 10.67.2.102:2379
+    - 10.101.207.13:2379
+    - 10.101.207.14:2379
+    - 10.101.207.15:2379
       # yamllint disable rule:comments-indentation
       # etcd basic auth info
     # username: "root"    # ignore etcd username if not enable etcd auth
